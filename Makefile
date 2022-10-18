@@ -48,7 +48,7 @@ sf-dc: ## Create symfony database.
 
 sf-dd: ## Drop symfony database.
 	$(SYMFONY_CONSOLE) doctrine:database:drop --if-exists --force
-.PHONY: sf-dc
+.PHONY: sf-dd
 
 sf-mm: ## Make migration.
 	$(SYMFONY_CONSOLE) make:migration
