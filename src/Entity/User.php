@@ -32,6 +32,9 @@ abstract class User
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?post $post = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,6 +84,18 @@ abstract class User
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPost(): ?post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?post $post): self
+    {
+        $this->post = $post;
 
         return $this;
     }
