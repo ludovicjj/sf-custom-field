@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Hello world</h1>
-    {% for user in users %}
-        <p>id: {{ user.id }}</p>
-        <p>firstname: {{ user.firstname }}</p>
-        <p>lastname: {{ user.lastname }}</p>
-        <p>email: {{ user.email }}</p>
-    {% endfor %}
+    <div class="container">
+        <h1>Hello world</h1>
+        {% for user in users %}
+            <p>id: {{ user.id }}</p>
+            <p>firstname: {{ user.firstname }}</p>
+            <p>lastname: {{ user.lastname }}</p>
+            <p>email: {{ user.email }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}
