@@ -11,8 +11,14 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // Pre-create Tags
-        TagFactory::createMany(10);
+        // create 100 Tag using a sequence callback with an incremental index
+        TagFactory::createSequence(
+            function() {
+                foreach (range(1, 100) as $i) {
+                    yield ['name' => "tag-$i"];
+                }
+            }
+        );
 
         PostFactory::new()
             ->many(5) // Create 5 posts
