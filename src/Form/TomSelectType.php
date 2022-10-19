@@ -46,6 +46,8 @@ class TomSelectType extends AbstractType
         $view->vars['required'] = false;
     }
 
+    // The block prefix must match with built-in field ChoiceType
+    // Will render a Select HTML Element
     public function getBlockPrefix(): string
     {
         return 'choice';
