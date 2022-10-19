@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Post;
 use App\Entity\Tag;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,13 +15,10 @@ class PostType extends AbstractType
         $builder
             ->add('title')
             ->add('content')
-            ->add('tags', EntityType::class, [
-                'class' => Tag::class,
-                'label' => 'Tags',
-                'choice_label' => 'name',
-                'multiple' => true
+            ->add('tags', TomSelectType::class, [
+                'class' => Tag::class
             ])
-            ;
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
