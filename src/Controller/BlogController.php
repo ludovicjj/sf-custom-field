@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,19 +25,18 @@ class BlogController extends AbstractController
     }
 
     #[Route('/posts/{id<\d+>}', name: 'app_blog_edit')]
-    public function edit(PostRepository $postRepository, Request $request, int $id)
+    public function edit(PostRepository $postRepository, Request $request, int $id, EntityManagerInterface $entityManager)
     {
         $post = $postRepository->find($id);
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            /** @var Post $post */
             $post = $form->getData();
-            dump('Post Data : ', $post);
-            foreach ($post->getTags() as $tag) {
-                dump('Tag', $tag->getName());
-            }
-            die('stop');
+            $form->get('tags')->getData()->map(fn($tag) => $post->addTag($tag));
+            $post->setTitle($form->get('title')->getData());
+            $post->setContent($form->get('content')->getData());
+            $entityManager->flush();
+            $this->addFlash('success', "Post updated with success !");
         }
 
         return $this->render('posts/edit.html.twig', [
