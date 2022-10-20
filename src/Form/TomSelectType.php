@@ -23,7 +23,8 @@ class TomSelectType extends AbstractType
         $resolver->setRequired('class');
         $resolver->setDefaults([
             'compound' => false,
-            'multiple' => true
+            'multiple' => true,
+            'search' => '/search'
         ]);
     }
 
@@ -44,6 +45,7 @@ class TomSelectType extends AbstractType
         $view->vars['choice_translation_domain'] = false;
         $view->vars['full_name'] .= '[]';
         $view->vars['required'] = false;
+        $view->vars['attr']['data-remote'] = $options['search'];
     }
 
     // The block prefix must match with built-in field ChoiceType
