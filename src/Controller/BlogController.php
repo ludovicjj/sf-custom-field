@@ -25,7 +25,12 @@ class BlogController extends AbstractController
     }
 
     #[Route('/posts/{id<\d+>}', name: 'app_blog_edit')]
-    public function edit(PostRepository $postRepository, Request $request, int $id, EntityManagerInterface $entityManager)
+    public function edit(
+        PostRepository $postRepository,
+        Request $request,
+        int $id,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $post = $postRepository->find($id);
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
@@ -37,6 +42,8 @@ class BlogController extends AbstractController
             $post->setContent($form->get('content')->getData());
             $entityManager->flush();
             $this->addFlash('success', "Post updated with success !");
+
+            return $this->redirectToRoute('app_blog_edit', ['id' => $post->getId()]);
         }
 
         return $this->render('posts/edit.html.twig', [
