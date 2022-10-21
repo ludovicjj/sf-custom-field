@@ -36,10 +36,6 @@ class BlogController extends AbstractController
         $form = $this->createForm(PostType::class, $post)->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $post = $form->getData();
-            $form->get('tags')->getData()->map(fn($tag) => $post->addTag($tag));
-            $post->setTitle($form->get('title')->getData());
-            $post->setContent($form->get('content')->getData());
             $entityManager->flush();
             $this->addFlash('success', "Post updated with success !");
 

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Repository\TagRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,5 +30,16 @@ class TagController extends AbstractController
         );
 
         return new JsonResponse($json, 200, [], true);
+    }
+
+    #[Route('/api/tags/create', name: 'api_tag_create', methods: ['POST'])]
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $tag = new Tag();
+        $tag->setName($data['name']);
+        $entityManager->persist($tag);
+        $entityManager->flush();
+        return $this->json(['id' => $tag->getId(), 'name' => $tag->getName()]);
     }
 }
