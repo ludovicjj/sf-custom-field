@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center my-4">Register</h2>
+        <hr>
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.lastname) }}
+        {% if form.password is defined %}
+            {{ form_row(form.password) }}
+        {% endif %}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
