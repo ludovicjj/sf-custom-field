@@ -18,9 +18,6 @@ class Region
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?int $code = null;
-
     #[ORM\OneToMany(mappedBy: 'region', targetEntity: Departement::class)]
     private Collection $departements;
 
@@ -42,18 +39,6 @@ class Region
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getCode(): ?int
-    {
-        return $this->code;
-    }
-
-    public function setCode(int $code): self
-    {
-        $this->code = $code;
 
         return $this;
     }
