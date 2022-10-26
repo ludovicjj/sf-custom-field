@@ -14,6 +14,10 @@ SYMFONY_SERVER_STOP = $(SYMFONY) server:stop
 SYMFONY_CONSOLE = $(SYMFONY) console
 #-------------#
 
+cities:
+	curl -L -o import/cities.csv https://www.data.gouv.fr/fr/datasets/r/51606633-fb13-4820-b795-9a2a575a72f1
+.PHONY: cites
+
 ## === DOCKER ===============================================
 docker-up: ## Start docker containers.
 	$(DOCKER_COMPOSE_UP)
