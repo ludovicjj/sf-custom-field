@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center my-4">Medecin List</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Departement</th>
+                <th scope="col">Region</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for medecin in medecins %}
+                <tr>
+                    <td>{{ medecin.name }}</td>
+                    <td>{{ medecin.ville.name }}</td>
+                    <td>{{ medecin.ville.departement.name }}</td>
+                    <td>{{ medecin.ville.departement.region.name }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('app_medecin_update', {'id': medecin.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MedecinRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MedecinRepository::class)]
 class Medecin
@@ -17,6 +18,7 @@ class Medecin
     private ?string $name = null;
 
     #[ORM\ManyToOne]
+    #[Assert\NotBlank]
     private ?Ville $ville = null;
 
     public function getId(): ?int

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center my-4">Medecin</h2>
+        <hr>
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {% if form_errors(form) %}
+            <div class="alert alert-danger">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
+        {{ form_row(form.name) }}
+        {{ form_row(form.region) }}
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

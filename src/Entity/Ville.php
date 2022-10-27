@@ -19,7 +19,7 @@ class Ville
     #[ORM\Column]
     private ?int $code = null;
 
-    #[ORM\ManyToOne(targetEntity: Departement::class)]
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: "villes")]
     private ?Departement $departement = null;
 
     public function getId(): ?int
@@ -61,5 +61,10 @@ class Ville
         $this->departement = $departement;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

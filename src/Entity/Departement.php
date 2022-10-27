@@ -24,7 +24,7 @@ class Departement
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Ville::class)]
     private Collection $villes;
 
-    #[ORM\ManyToOne(targetEntity: Region::class)]
+    #[ORM\ManyToOne(targetEntity: Region::class, inversedBy: "departements")]
     private ?Region $region = null;
 
     public function __construct()
@@ -104,5 +104,10 @@ class Departement
         $this->region = $region;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
