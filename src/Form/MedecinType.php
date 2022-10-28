@@ -31,6 +31,22 @@ class MedecinType extends AbstractType
             $this->addDepartementField($form->getParent(), $form->getData());
 
         });
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+            $ville = $data->getVille();
+            if ($ville) {
+                $departement = $ville->getDepartement();
+                $region = $departement->getRegion();
+                $this->addDepartementField($form, $region);
+                $this->addVilleField($form, $departement);
+                $form->get('region')->setData($region);
+                $form->get('departement')->setData($departement);
+            } else {
+                $this->addDepartementField($form, null);
+                $this->addVilleField($form, null);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -42,10 +58,10 @@ class MedecinType extends AbstractType
 
     /**
      * @param FormInterface $form Parent of region form
-     * @param Region $region
+     * @param Region|null $region
      * @return void
      */
-    private function addDepartementField(FormInterface $form, Region $region)
+    private function addDepartementField(FormInterface $form, ?Region $region)
     {
         // create builder for field
         $builder = $form->getConfig()->getFormFactory()->createNamedBuilder(
@@ -58,15 +74,16 @@ class MedecinType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'auto_initialize' => false, // important
-                'choices' => $region->getDepartements()
+                'choices' => $region ? $region->getDepartements() : [],
             ]
         );
 
         // Add event
         $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
             $form = $event->getForm();
-            if ($form->getData() !== null) {
-                $this->addVilleField($form->getParent(), $form->getData());
+            $departement = $form->getData();
+            if ($departement !== null) {
+                $this->addVilleField($form->getParent(), $departement);
             }
         });
 
@@ -84,7 +101,7 @@ class MedecinType extends AbstractType
         $form->add('ville', EntityType::class, [
             'class' => Ville::class,
             'placeholder' => 'Choose a town',
-            'choices' => $departement->getVilles()
+            'choices' => $departement ? $departement->getVilles() : []
         ]);
     }
 }
