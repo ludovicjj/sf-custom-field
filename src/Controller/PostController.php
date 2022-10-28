@@ -2,29 +2,26 @@
 
 namespace App\Controller;
 
-use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BlogController extends AbstractController
+class PostController extends AbstractController
 {
-    #[Route('/', name: 'app_blog_home')]
-    public function index(UserRepository $userRepository): Response
+    #[Route('/', name: 'app_post')]
+    public function index(PostRepository $postRepository): Response
     {
-        $users = $userRepository->findAll();
+        $posts = $postRepository->findAll();
         return $this->render('posts/index.html.twig', [
-            'users' => $users
+            'posts' => $posts
         ]);
     }
 
-    #[Route('/posts/{id<\d+>}', name: 'app_blog_edit')]
+    #[Route('/posts/{id<\d+>}', name: 'app_post_edit')]
     public function edit(
         PostRepository $postRepository,
         Request $request,
@@ -39,7 +36,7 @@ class BlogController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', "Post updated with success !");
 
-            return $this->redirectToRoute('app_blog_edit', ['id' => $post->getId()]);
+            return $this->redirectToRoute('app_post');
         }
 
         return $this->render('posts/edit.html.twig', [
