@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center my-4">Listing post (Select2)</h2>
+        <hr>
+
+        <div class="row">
+            <div class="mb-4">
+                <a href="{{ path('app_article_new') }}" class="btn btn-primary">Add post</a>
+            </div>
+
+            {% for article in articles %}
+                <div class="col-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ article.title }}</h5>
+                            <p class="card-text flex-fill">{{ article.content }}</p>
+                            <a class="btn btn-success" style="width:fit-content" href="{{ path('app_article_update', {'id': article.id}) }}">Edit</a>
+                        </div>
+                        <div class="card-footer">
+                            {% for tag in article.tags %}
+                                <span class="badge text-bg-primary">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}
