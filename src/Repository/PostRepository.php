@@ -39,6 +39,14 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllPostsJoinTags() {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.tags', 't')
+            ->addSelect('t')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Post[] Returns an array of Post objects
 //     */
