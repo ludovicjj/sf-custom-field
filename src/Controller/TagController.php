@@ -33,13 +33,21 @@ class TagController extends AbstractController
     }
 
     #[Route('/api/tags/create', name: 'api_tag_create', methods: ['POST'])]
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    public function create(Request $request, EntityManagerInterface $entityManager, TagRepository $tagRepository): Response
     {
         $data = json_decode($request->getContent(), true);
-        $tag = new Tag();
-        $tag->setName($data['name']);
-        $entityManager->persist($tag);
-        $entityManager->flush();
+        $name = $data['name'] ?? null;
+        $tag = $tagRepository->findOneBy(['name' => $name]);
+
+        // If tag not exist into DB, create new tag, persist/flush it
+        if (!$tag) {
+            $tag = new Tag();
+            $tag->setName($data['name']);
+            $entityManager->persist($tag);
+            $entityManager->flush();
+        }
+
+        // Then return json with the new tag or the already exist tag
         return $this->json(['id' => $tag->getId(), 'name' => $tag->getName()]);
     }
 }
