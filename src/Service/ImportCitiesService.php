@@ -30,7 +30,6 @@ class ImportCitiesService
 
         $regions = [];
         $departements = [];
-        $villes = [];
 
         foreach ($datas as $data) {
             // Regions
