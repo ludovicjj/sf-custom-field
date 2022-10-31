@@ -37,6 +37,11 @@ class TagController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $name = $data['name'] ?? null;
+
+        if ($name) {
+            $name = trim(strip_tags($name));
+        }
+
         $tag = $tagRepository->findOneBy(['name' => $name]);
 
         // If tag not exist into DB, create new tag, persist/flush it
