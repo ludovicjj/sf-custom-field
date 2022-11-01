@@ -10,12 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ArticleController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private UrlGeneratorInterface $urlGenerator
+    ){}
 
     #[Route('/article', name: 'app_article')]
     public function index(PostRepository $postRepository): Response
@@ -32,13 +34,16 @@ class ArticleController extends AbstractController
     {
         $article = new Post();
 
-        $form = $this->createForm(ArticleType::class, $article)
+        $form = $this->createForm(ArticleType::class, $article, [
+            'search' => $this->urlGenerator->generate('api_tag_create')
+        ])
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
             $this->entityManager->persist($article);
             $this->entityManager->flush();
+            $this->addFlash('success', 'Post created with success');
             return $this->redirectToRoute('app_article');
         }
 
@@ -56,8 +61,15 @@ class ArticleController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(ArticleType::class, $article)
-            ->handleRequest($request);
+        $form = $this->createForm(ArticleType::class, $article, [
+            'search' => $this->urlGenerator->generate('api_tag_create')
+        ])->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Post updated with success');
+            return $this->redirectToRoute('app_article');
+        }
 
         return $this->render('article/new.html.twig', [
             'form' => $form->createView()
