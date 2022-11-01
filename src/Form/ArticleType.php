@@ -28,7 +28,8 @@ class ArticleType extends AbstractType
                         ->orderBy('t.name', 'ASC');
                 },
                 'attr' => [
-                    'class' => 'js-select-tags'
+                    'class' => 'js-select-tags',
+                    'data-remote' => $options['search']
                 ]
             ])
             ;
@@ -37,7 +38,8 @@ class ArticleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Post::class
+            'data_class' => Post::class,
+            'search' => '/search'
         ]);
     }
 }
