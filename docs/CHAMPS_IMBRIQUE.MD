@@ -3,14 +3,7 @@
 ## Diagramme de classe
 ![(diagramme-de-class)](./uml/dia-class-many-to-many.png)
 
-## Formulaire d'ajout
-
-Création du formulaire d'ajout d'un médecin. Le formulaire est rendu avec deux champs (name et region).
-Lorsque le formulaire est soumis on ajoute le champ département. Prérempli avec les départements associés à la région sélectionnée.
-Lorsque le formulaire est soumis on ajoute le champ ville. Prérempli avec les villes associées à au département sélectionné.
-Enfin si le formulaire est encore soumis, il est pris en charge par le controller.
-
-* Entité Médecin et contrainte de validation
+## Entité Médecin et contrainte de validation
 ```
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
@@ -20,7 +13,15 @@ Enfin si le formulaire est encore soumis, il est pris en charge par le controlle
     #[Assert\NotBlank]
     private ?Ville $ville = null;
 ```
-* Création des champs
+
+## Formulaire d'ajout
+
+Création du formulaire d'ajout d'un médecin. Le formulaire est rendu avec deux champs (name et region).
+Lorsque le formulaire est soumis on ajoute le champ département. Prérempli avec les départements associés à la région sélectionnée.
+Lorsque le formulaire est soumis on ajoute le champ ville. Prérempli avec les villes associées au département sélectionné.
+Enfin si le formulaire est encore soumis, il est pris en charge par le controller.
+
+### Création des champs
 
 - Création d'un champ name (TextType)
 - Création d'un champ region (EntityType et non mapped)
@@ -94,7 +95,7 @@ Enfin si le formulaire est encore soumis, il est pris en charge par le controlle
 
 ## Formulaire update
 
-Pour la mise à jour d'un médecin l'évènement ```FormEvents::POST_SET_DATA``` servira ajouter les champs 
+Pour la mise à jour d'un médecin l'évènement ```FormEvents::POST_SET_DATA``` servira à ajouter les champs 
 avec les valeurs sélectionnées.
 
 ```
