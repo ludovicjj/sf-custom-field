@@ -2,7 +2,7 @@
 
 ## Champs personnalisés
 
-(wip)
+Création d'un champ utilisant le rendu d'un choice type dans une relation ManyToMany.[ Voir étude de cas](./docs/CUSTOM_FIELD.md).
 
 ## Champs Imbriqués
 
@@ -10,9 +10,5 @@ Utilisation des événements de formulaire ```FormEvents::POST_SET_DATA``` et ``
 pour ajouter des champs ou préremplir certains champs avec des valeurs données.[ Voir étude de cas](./docs/CHAMPS_IMBRIQUE.MD).
 
 ## Select boxes 
-
-(wip)
-
-## Select boxes
 
 (wip)
