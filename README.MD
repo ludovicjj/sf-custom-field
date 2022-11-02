@@ -1,4 +1,9 @@
-# Champs personnalisés avec Symfony
+# Champs personnalisés et évènement de formulaire avec Symfony
+
+## projet
+- php : 8.1
+- symfony : 6.1
+- bdd : PostgreSQL (docker)
 
 ## Champs personnalisés
 
