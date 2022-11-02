@@ -26,10 +26,11 @@ class MedecinType extends AbstractType
                 'mapped' => false,
                 'required' => false
             ]);
-        $builder->get('region')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
-            $form = $event->getForm();
-            $this->addDepartementField($form->getParent(), $form->getData());
-
+        $builder->get('region')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) use ($builder) {
+            $region = $event->getForm()->getData();
+            if ($region) {
+                $this->addDepartementField($event->getForm()->getParent(), $region);
+            }
         });
         $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
             $data = $event->getData();
@@ -80,10 +81,9 @@ class MedecinType extends AbstractType
 
         // Add event
         $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
-            $form = $event->getForm();
-            $departement = $form->getData();
-            if ($departement !== null) {
-                $this->addVilleField($form->getParent(), $departement);
+            $departement =  $event->getForm()->getData();
+            if ($departement) {
+                $this->addVilleField($event->getForm()->getParent(), $departement);
             }
         });
 
