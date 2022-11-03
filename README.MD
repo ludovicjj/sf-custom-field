@@ -7,7 +7,7 @@
 
 ## Champs personnalisés
 
-Création d'un champ utilisant le rendu d'un choice type dans une relation ManyToMany.[ Voir étude de cas](./docs/CUSTOM_FIELD.md).
+Création d'un champ personnalisé utilisant le rendu du choice type.[ Voir étude de cas](./docs/CUSTOM_FIELD.md).
 
 ## Champs Imbriqués
 
@@ -16,4 +16,5 @@ pour ajouter des champs ou préremplir certains champs avec des valeurs données
 
 ## Select boxes 
 
-(wip)
+Utilisation de [Tom Select](https://tom-select.js.org/) et [Select2](https://select2.org/) pour créer des
+```select``` dynamique avec une prise en charge de la recherche.[ Voir étude de cas](./docs/CUSTOM_FIELD.md).
